@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    var obj = {
+        a: 'obj object'
+    };
+    var a = 'windos obj'
+
+    var f = function () {
+        return this.a;
+    };
+
+    console.log( f.call(window) )
+   console.log( f.call(obj) )
+</script>
+</html>
