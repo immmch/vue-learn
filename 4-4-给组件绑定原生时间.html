@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>给组件绑定原生事件</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--  当给一个自定义组件定义事件时,绑定的是一个自定义的事件
+             使用this.$emit 去触发一个自定义事件
+             如果需要监听一个原生事件,需要加一个.native修饰符,如下:-->
+        <child @click.native="clickHandle"></child>
+    </div>
+</body>
+<script>
+    Vue.component('child', {
+        template: '<div>Child</div>'
+    })
+
+    const app = new  Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+            clickHandle: function (){
+                alert('父组件 click')
+            }
+        }
+    })
+</script>
+</html>

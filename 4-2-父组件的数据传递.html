@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父组件的数据传递, 及子组件通过时间触发传值</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--
+              <counter count = "0"></counter>
+              <counter :count = "0"></counter>
+              不加: count就是字符0
+              如果加: count就是数字0
+              加: 右边双引号内就为js表达式
+        -->
+        <counter @change="changeCount" :count = "3"></counter>
+        <counter :count = "2"></counter>
+
+        <div>{{total}}</div>
+    </div>
+
+</body>
+    <script>
+        <!--   局部组件     -->
+        const counter = {
+            props: ['count'],
+            template: '<div @click="handleClick">{{number}}</div>',
+            data: function () {
+                return {
+                    number: this.count
+                }
+            },
+            methods: {
+                handleClick: function () {
+                    //vue 中单向数据流的概念[父组件可以给子组件传递参数, 但是反过来子组件不能给父组件传递参数], 下面的写法会导致console报警告
+                    //this.count++
+
+                    this.number = this.number + 2
+                    //触发事件 change
+                    this.$emit('change', this.number)
+                }
+            }
+        };
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                total: 5
+            },
+            components: {
+                counter: counter
+            },
+            methods: {
+                changeCount: function (count) {
+                    this.total = count
+                }
+            }
+
+        });
+    </script>
+</html>

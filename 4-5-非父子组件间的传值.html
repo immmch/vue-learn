@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非父子组件间的传值(Bus/总线/发布订阅模式/观察者模式)</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+    <!-- 使用vuex 在非父子组件中传值
+         也可以使用总线机制在非父子组件中传值  -->
+<body>
+    <div id="app">
+        <child content="Dell"></child>
+        <child content="Lee"></child>
+    </div>
+</body>
+<script>
+    Vue.prototype.bus = new  Vue()
+
+    Vue.component('child', {
+        props: {
+          content: String
+        },
+        template: '<div @click="handleClick">{{content}}</div>',
+        methods: {
+            handleClick: function () {
+                // alert(this.content);
+                this.bus.$emit('change', this.content)
+            }
+        },
+        mounted: function () {
+            var this_ = this;
+            this.bus.$on('change', function (msg) {
+                //note: 注意这里的this作用域发生了变化
+                this_.content = msg
+            })
+        }
+    })
+    const app = new  Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+
+        }
+    })
+</script>
+</html>
