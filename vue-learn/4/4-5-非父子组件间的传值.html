@@ -18,21 +18,26 @@
     Vue.prototype.bus = new  Vue()
 
     Vue.component('child', {
+        data: function(){
+            return {
+                selfContent: this.content
+            }
+        },
         props: {
           content: String
         },
-        template: '<div @click="handleClick">{{content}}</div>',
+        template: '<div @click="handleClick">{{selfContent}}</div>',
         methods: {
             handleClick: function () {
                 // alert(this.content);
-                this.bus.$emit('change', this.content)
+                this.bus.$emit('change', this.selfContent)
             }
         },
         mounted: function () {
             var this_ = this;
             this.bus.$on('change', function (msg) {
                 //note: 注意这里的this作用域发生了变化
-                this_.content = msg
+                this_.selfContent = msg
             })
         }
     })

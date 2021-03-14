@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中CSS动画原理</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 3.5s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+    <!-- 动画原理,在特定的时间或者时间区间增加样式实现的 -->
+<body>
+    <div id="root">
+        <transition name="fade">
+            <div v-if="show">hello world</div>
+        </transition>
+
+        <button @click="handleClick">切换</button>
+    </div>
+</body>
+    <script>
+        let vm = new Vue({
+            el: '#root',
+            data: {
+                show: true
+            },
+            methods: {
+                 handleClick: function () {
+                    this.show = !this.show
+                 }
+            }
+        })
+    </script>
+</html>

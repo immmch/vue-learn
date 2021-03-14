@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的Js动画与Velocity.js的结合</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<!-- 动画原理,在特定的时间或者时间区间增加样式实现的 -->
+<body>
+<div id="root">
+    <!-- class名称可以自定义, 使用enter-active-class, leave-active-class   -->
+    <transition name="fade"
+                @before-enter="handleBeforeEnter"
+                @enter="handleEnter"
+                @after-enter="handleAfterEnter">
+        <div v-if="show">hello world</div>
+    </transition>
+
+    <button @click="handleClick">切换</button>
+</div>
+</body>
+<script>
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick: function () {
+                this.show = !this.show
+            },
+            handleBeforeEnter: function (el) {
+                el.style.color = 'red'
+            },
+            handleEnter: function (el, done) {
+                setTimeout(()=>{
+                    el.style.color = 'green'
+                    done()// 一定要调用这个done函数, 不然不会调用handleAfterEnter
+                }, 2000)
+            },
+            handleAfterEnter: function (el) {
+                el.style.color = 'black'
+            }
+        }
+    })
+</script>
+</html>

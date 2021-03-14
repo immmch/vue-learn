@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中同时使用过渡和动画</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+</head>
+<!-- 动画原理,在特定的时间或者时间区间增加样式实现的 -->
+<body>
+<div id="root">
+    <!-- class名称可以自定义, 使用enter-active-class, leave-active-class
+        appear 和 appear-active-class设置页面的初次动画
+    -->
+    <transition
+                :duration="{enter: 5000, leave: 100000}"
+                name="fade"
+                appear enter-active-class="
+                animate__animated  animate__swing"
+                appear-active-class="animate__animated animate__swing">
+        <div v-if="show">hello world</div>
+    </transition>
+
+    <button @click="handleClick">切换</button>
+</div>
+</body>
+<script>
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick: function () {
+                this.show = !this.show
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的插槽(slot)/具名插槽(子组件多个插槽可以命令)</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child>
+            <p>Dell</p>
+        </child>
+    </div>
+</body>
+<script>
+    Vue.component('child', {
+        template: '<div><p>hello</p>' +
+            '<slot></slot>' +
+            '</div>'
+    })
+
+    const app = new  Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+
+        }
+    })
+</script>
+</html>
